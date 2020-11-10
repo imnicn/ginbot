@@ -7,8 +7,10 @@
 package router
 
 import (
+	"ginbot/handler/auth"
 	"ginbot/handler/bot"
 	"ginbot/handler/home"
+	"ginbot/midware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -17,10 +19,12 @@ import (
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
 
+	r.POST("/login", auth.Login)
+
 	groupHome := r.Group("/home")
 	groupHome.GET("/", home.HandlerGetIndex)
 
-	groupBot := r.Group("/bot")
+	groupBot := r.Group("/bot", midware.AuthJWT())
 	groupBot.GET("/start", bot.Start)
 	groupBot.GET("/stop", bot.Stop)
 	groupBot.GET("/logout", bot.Logout)

@@ -39,5 +39,5 @@ func init() {
 	}
 	log.Println("数据库连接成功。")
 
-	db.AutoMigrate(&Bot{})
+	db.AutoMigrate(&Account{}, &Bot{})
 }

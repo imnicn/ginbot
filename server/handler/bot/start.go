@@ -17,50 +17,36 @@ import (
 /*Start 机器人启动*/
 func Start(c *gin.Context) {
 	bot := new(model.Bot)
-	bot.ID = uint(1)
+	bot.ID = uint32(1)
 	if err := bot.Get(); err != nil {
 		c.JSON(http.StatusForbidden, err)
 	}
-	if err := app.Bot.Start(bot.Token, bot.Endpoint); err != nil {
+	if err := app.Bot.Start(bot.ID, bot.Token, bot.Endpoint); err != nil {
 		c.JSON(http.StatusForbidden, err)
 	}
 
-	c.JSON(http.StatusOK, app.Bot.GetID(bot.Token))
+	c.JSON(http.StatusOK, app.Bot.GetQrcode(bot.ID))
 }
 
 /*Stop 机器人停止*/
 func Stop(c *gin.Context) {
-	bot := new(model.Bot)
-	bot.ID = uint(1)
-	if err := bot.Get(); err != nil {
-		c.JSON(http.StatusForbidden, err)
-	}
 
-	err := app.Bot.Stop(bot.Token)
+	id := uint32(1)
+	err := app.Bot.Stop(id)
 
-	c.JSON(http.StatusOK, err.Error()+app.Bot.GetID(bot.Token))
+	c.JSON(http.StatusOK, err.Error())
 }
 
 /*Logout 机器人注销*/
 func Logout(c *gin.Context) {
-	bot := new(model.Bot)
-	bot.ID = uint(1)
-	if err := bot.Get(); err != nil {
-		c.JSON(http.StatusForbidden, err)
-	}
+	id := uint32(1)
+	err := app.Bot.Logout(id)
 
-	err := app.Bot.Logout(bot.Token)
-
-	c.JSON(http.StatusOK, err.Error()+app.Bot.GetID(bot.Token))
+	c.JSON(http.StatusOK, err.Error()+app.Bot.GetID(id))
 }
 
 /*FindAllRoom 查找全部微信群*/
 func FindAllRoom(c *gin.Context) {
-	bot := new(model.Bot)
-	bot.ID = uint(1)
-	if err := bot.Get(); err != nil {
-		c.JSON(http.StatusForbidden, err)
-	}
-
-	c.JSON(http.StatusOK, app.Bot.FindAllRoom(bot.Token))
+	id := uint32(1)
+	c.JSON(http.StatusOK, app.Bot.FindAllRoom(id))
 }

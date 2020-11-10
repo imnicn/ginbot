@@ -8,9 +8,10 @@ package model
 
 //Bot 微信机器人表
 type Bot struct {
-	ID       uint
-	Token    string
-	Endpoint string
+	ID        uint32 `gorm:"comment:'机器人ID'"`
+	Token     string `gorm:"size:32;comment:'机器人Token'"`
+	Endpoint  string `gorm:"size:32;comment:'机器人Endpoint'"`
+	AccountID uint32 `gorm:"comment:'所属账户ID'"`
 }
 
 //Get 根据主键获取数据
