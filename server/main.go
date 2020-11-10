@@ -6,8 +6,14 @@
 
 package main
 
-func main() {
-	r := setupRouter()
-	r.Run(":8080")
+import (
+	"ginbot/app"
+	"ginbot/router"
+)
 
+func main() {
+	app.Start()
+
+	gin := router.SetupRouter()
+	gin.Run(":8080")
 }

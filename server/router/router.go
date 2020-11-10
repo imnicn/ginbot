@@ -4,7 +4,7 @@
  * @Date: 2020-11-08 19:40:22
  */
 
-package main
+package router
 
 import (
 	"ginbot/handler/bot"
@@ -13,7 +13,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func setupRouter() *gin.Engine {
+//SetupRouter SetupRouter
+func SetupRouter() *gin.Engine {
 	r := gin.Default()
 
 	groupHome := r.Group("/home")
@@ -22,6 +23,7 @@ func setupRouter() *gin.Engine {
 	groupBot := r.Group("/bot")
 	groupBot.GET("/start", bot.Start)
 	groupBot.GET("/stop", bot.Stop)
+	groupBot.GET("/logout", bot.Logout)
 	groupBot.GET("/find_all_room", bot.FindAllRoom)
 
 	return r
